@@ -1,0 +1,16 @@
+{
+    "name": "Nodejs-ERP",
+    "description": "As the name says, an ERP with node.js on the serverside",
+    "author": "Felix Klotzsche",
+    "dependencies":{
+        "express": "3.x",
+        "mongoose": "3.x"
+    },
+    "devDependencies": {
+        "mocha": "1.x",
+        "should": "1.x"
+    },
+    "scripts":{
+        "test": "node_modules/mocha/bin/mocha --reporter spec"
+    }
+}

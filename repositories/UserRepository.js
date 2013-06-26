@@ -5,6 +5,7 @@ var User = require("../models/UserModel");
 
 function UserRepository(){
     this.createUser = createUser;
+    this.findByUserName = findByUserName;
 }
 
 function createUser(userName, firstName, lastName, password, email){
@@ -27,6 +28,18 @@ function createUser(userName, firstName, lastName, password, email){
         }            
     });
 
+    return deferred.promise;
+}
+
+function findByUserName(name){
+    var deferred = q.defer();
+    User.findOne({ userName: name}, function(err, doc){
+        if(err){
+            deferred.reject(new Error(err));
+        }else{
+            deferred.resolve(doc);
+        }
+    });
     return deferred.promise;
 }
 

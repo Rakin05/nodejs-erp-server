@@ -3,6 +3,7 @@ var should = require("should");
 var config = require("../config/test");
 
 var UserRepository = require("../repositories/UserRepository");
+var User = require("../models/UserModel");
 
 describe("UserRepository", function(){
     var repository = null;
@@ -32,10 +33,26 @@ describe("UserRepository", function(){
             });
     });
 
+    it("should find a user by userName", function(done){
+        repository.findByUserName("Rakin").then(function(doc){
+            should.exist(doc);
+            doc.should.have.property("userName");
+            doc.userName.should.equal("Rakin");
+            done();
+        }).fail(function(err){
+           done(err); 
+        });
+    });
+
     after(function(done){
-        //close the connection
-        mongoose.connection.close(function(err){
-            done(err);
+        User.remove({}, function(err){
+            if(err){
+                done(err);
+            }else{
+                mongoose.connection.close(function(err){
+                    done();
+                });
+            }
         });
     });
 });

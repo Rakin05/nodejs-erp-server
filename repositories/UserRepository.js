@@ -7,6 +7,7 @@ function UserRepository(){
     this.createUser = createUser;
     this.findByUserName = findByUserName;
     this.findByEmail = findByEmail;
+    this.countUsers = countUsers
 }
 
 function createUser(userName, firstName, lastName, email, password){
@@ -50,6 +51,18 @@ function findByEmail(_email){
             deferred.reject(new Error(err));
         }else{
             deferred.resolve(doc);
+        }
+    });
+    return deferred.promise;
+}
+
+function countUsers(){
+    var deferred = q.defer();
+    User.count(function(err, count){
+        if(err){
+            deferred.reject(new Error(err));
+        }else{
+            deferred.resolve(count);
         }
     });
     return deferred.promise;

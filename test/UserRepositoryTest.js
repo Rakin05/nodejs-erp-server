@@ -60,6 +60,28 @@ describe("UserRepository", function(){
             });
     });
 
+    // 
+    it("should have the ability to count users", function(done){
+        repository.countUsers()
+            .then(function(count){
+                count.should.equal(1);
+                done();
+            }).fail(function(err){
+                done(err);
+            });
+
+        // goddamn is this ugly :-D
+        // create a new user and the userCount should now be 2
+        repository.createUser("test", "test", "test", "test@test.com","test")
+            .then(function(){
+                repository.countUsers().then(function(count){
+                    count.should.equal(2);
+                });
+            }).fail(function(err){
+                done(err);
+            });
+    });
+
     after(function(done){
         User.remove({}, function(err){
             if(err){

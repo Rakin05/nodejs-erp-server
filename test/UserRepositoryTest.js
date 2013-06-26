@@ -13,7 +13,7 @@ describe("UserRepository", function(){
         done();
     });
 
-    it("should be true that true is true", function(done){
+    it("should save a new User", function(done){
         repository.createUser(
             "Rakin",
             "Felix", "Klotzsche",

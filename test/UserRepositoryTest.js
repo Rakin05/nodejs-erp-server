@@ -15,11 +15,13 @@ describe("UserRepository", function(){
     });
 
     it("should save a new User", function(done){
-        repository.createUser(
-            "Rakin",
-            "Felix", "Klotzsche",
-            "felixklotzsche@gmail.com",
-            "test123").then(function(doc){
+        repository.createUser("Rakin",
+                              "Felix",
+                              "Klotzsche",
+                              "test@test.com",
+                              "test123"
+                             )
+            .then(function(doc){
                 should.exist(doc);
                 doc.should.have.property("userName");
                 doc.should.have.property("firstName");
@@ -42,6 +44,20 @@ describe("UserRepository", function(){
         }).fail(function(err){
            done(err); 
         });
+    });
+
+    it("should find a user by email", function(done){
+        repository.findByEmail("test@test.com")
+            .then(function(doc){
+                should.exist(doc);
+                doc.should.have.property("userName");
+                doc.should.have.property("email");
+                doc.userName.should.equal("Rakin");
+                doc.email.should.equal("test@test.com");
+                done();
+            }).fail(function(err){
+                done(err);
+            });
     });
 
     after(function(done){
